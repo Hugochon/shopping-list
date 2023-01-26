@@ -1,4 +1,4 @@
-# NextJS_SimpleSetUp
+# Set up Guide
 
 This is a little guide to set up a work environment to create Websites using NextJS.
 
