@@ -1,44 +1,62 @@
 .container {
-  min-height: 100vh;
-  padding: 0 0.5rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
   height: 100vh;
-}
-
-.main {
-  padding: 5rem 0;
-  flex: 1;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
   align-items: center;
 }
 
-.title {
-  margin: 0;
-  line-height: 1.15;
-  font-size: 2rem;
+.grid {
+  font-size: clamp(3rem, 4vw, 8rem);
+  display: block;
+  text-decoration: none;
+  
+  margin-left: clamp(4rem, 5vw, 8rem);
+  transition: opacity 400ms ease;
+}
+.card:hover {
+  font-size: 110%;
+  transition: 300ms;
+  text-decoration: underline;
+}
+.grid:hover .card:not(:hover) {
+  opacity: 0.3;
+  transition: 300ms;
+}
+
+.background{
+  height: 100%;
+  width: 100%;
+  background-image: radial-gradient(rgba(2255,255,255,0.1) 9%,transparent 9%);
+  background-size: 11vmin 11vmin;
+  position : absolute;
+  left : 0;
+  top : 0;
+  z-index: -1;
+  transition: 500ms;
+  --index: 0;
+  background-position-y: calc(10% * var(--index));
+}
+
+.image {
+  height: 100%;
+  width: 100%;
+  background-image: url("../../public/image1.jpg");
+
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  z-index: -1;
+  transition: 500ms;
+  opacity: 0.20;
+
+  --index: 0;
+
+  background-size: 110vmax;
+  background-repeat: no-repeat;
+  background-position-x: 40%;
+  background-position-y: calc(40% + 10% * var(--index));
 }
 
 
-.card:hover,
-.card:focus,
-.card:active {
-  color: #0070f3;
-  border-color: #0070f3;
-}
-
-.card h2 {
-  font-size: 1.5rem;
-}
 
 
-@media (max-width: 600px) {
-  .grid {
-    width: 100%;
-    flex-direction: column;
-  }
-}
+

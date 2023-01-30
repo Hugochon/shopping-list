@@ -10,11 +10,11 @@ export default function Contact(){
             <div className={styles.details}>
                 <li className={styles.list}>
                 <label className={styles.label}>Name:</label>
-                <p className={styles.value}>Lorem</p>
+                <p className={styles.value}>Schneegans Hugo</p>
                 </li>
                 <li className={styles.list}>
                 <label className={styles.label}>Email:</label>
-                <p className={styles.value}>lorem@example.com</p>
+                <p className={styles.value}>hugo.schneegans@gmail.com</p>
                 </li>
             </div>
         </div>

@@ -1,40 +1,38 @@
 import Link from "next/link"
 import styles from '../styles/Home.module.css'
 import Header from './header'
+import { useState } from "react"
 
 export default function Home() {
+  
+  const cards = [
+    { href: '/', text: 'Home' },
+    { href: '/add_liste_courses', text: 'Créer une nouvelle liste' },
+    { href: '/see_lists', text: 'Voir ses listes' },
+    { href: '/contact', text: 'Contact' },
+  ]
+
+  const [hoveredCard, setHoveredCard] = useState(0);
+
   return (
-    
     <div className={styles.container}>
       <Header />
       <main className={styles.main}>
-        <h2 className={styles.title}>
-          Multi-page website using Next.js
-        </h2>
-
         <div className={styles.grid}>
-          <Link href="/" >
-            <span className={styles.card}>
-            <h2>Home &rarr;</h2>
-            </span>
-          </Link>
-
-          <Link href="/about" >
-          <span className={styles.card}>
-            <h2>About &rarr;</h2>
-            </span>
-          </Link>
-
-          <Link
-            href="/contact"
-            
-          >
-            <span className={styles.card}>
-            <h2>Contact &rarr;</h2>
-            </span>
-          </Link>
-
+          {cards.map((card, index) => (
+            <Link key={index} href={card.href}>
+              <p 
+                className={`${styles.card} ${hoveredCard === index+1 ? styles.hovered : ''}`}
+                onMouseEnter={() => setHoveredCard(index+1)}              
+              >
+                {card.text} &rarr;
+              </p>
+            </Link>
+          ))}
+          <div className={styles.background} style={{"--index" : hoveredCard}}></div>
+          <div className={styles.image} style={{"--index" : hoveredCard}}></div>
         </div>
+        
       </main>
     </div>
   )
