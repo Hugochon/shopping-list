@@ -1,5 +1,5 @@
 import React from "react";
-import styles from '../styles/Contact.module.css'
+import styles from '../styles/contact.module.css'
 import Header from './header'
 
 export default function Contact(){
