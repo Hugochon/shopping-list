@@ -2,7 +2,7 @@ import React from "react";
 import styles from '../styles/add_list.module.css'
 import Header from './header'
 import { useEffect, useState } from 'react'
-import axios from 'axios'
+import { addToDB } from "../scripts/interact_firebase";
 
 function Add_liste_courses() {
 
@@ -54,8 +54,9 @@ function Add_liste_courses() {
     }
     else {
       try {
-        const response = await axios.post('https://shopping-list-lac-theta.vercel.app/api/courses', {list,username: username,listName: listName});
+        const response = addToDB({"username" : username , "list" : list,"listName" :listName });
         console.log(response.data);
+        console.log("success");
       } catch (error) {
         console.error(error);
       }
