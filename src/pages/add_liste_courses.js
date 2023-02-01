@@ -54,7 +54,7 @@ function Add_liste_courses() {
     }
     else {
       try {
-        const response = await axios.post('http://localhost:3000/api/courses', {list,username: username,listName: listName});
+        const response = await axios.post('https://shopping-list-lac-theta.vercel.app/api/courses', {list,username: username,listName: listName});
         console.log(response.data);
       } catch (error) {
         console.error(error);
