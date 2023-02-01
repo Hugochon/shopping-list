@@ -27,16 +27,22 @@ async function getCollectionByUser(username) {
         const q = query(collection(db, "utilisateurs"), where("username", "==", username));
         const querySnapshot = await getDocs(q);
         querySnapshot.forEach((doc) => {
-            collectionArray.push(doc.data());
+            collectionArray.push({...doc.data(),id : doc.id});
         });
         console.log("ouioui : " + collectionArray)
-        console.log(collectionArray[0].list)
+        console.log(collectionArray[0])
         return collectionArray;
     } catch (error) {
         console.log(error);
     }
 }
+async function deleteList(id) {
+    try {
+        await deleteDoc(doc(db, "utilisateurs", id));
+        alert("Document successfully deleted!");
+    } catch (e) {
+        console.error("Error removing document: ", e);
+    }
+}
 
-
-
-export {addToDB, getCollection, getCollectionByUser}
+export {addToDB, getCollection, getCollectionByUser,deleteList}

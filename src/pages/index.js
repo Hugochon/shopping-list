@@ -23,7 +23,7 @@ export default function Home() {
             <Link key={index} href={card.href}>
               <p 
                 className={`${styles.card} ${hoveredCard === index+1 ? styles.hovered : ''}`}
-                onMouseEnter={() => setHoveredCard(index+1)}              
+                onMouseEnter={() => setHoveredCard(index)}              
               >
                 {card.text} &rarr;
               </p>

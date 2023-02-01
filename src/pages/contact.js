@@ -5,6 +5,7 @@ import Header from './header'
 export default function Contact(){
     return(
         <div className={styles.container}>
+            <img className={styles.image}src="./image1.jpg"/>
             <Header />
             <h2 className={styles.title}>Contact Page</h2>
             <div className={styles.details}>

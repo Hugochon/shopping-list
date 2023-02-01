@@ -9,8 +9,8 @@ export default async function handler(req, res) {
             res.status(200).json(myCollection)
             break;
         case "POST":
-            const { list, username } = req.body;         
-            addToDB({"username" : username , "list" : list});
+            const { list, username,listName } = req.body;         
+            addToDB({"username" : username , "list" : list,"listName" :listName });
             res.status(200).json({ success: true })
             break;
         default:

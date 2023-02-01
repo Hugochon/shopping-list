@@ -9,18 +9,25 @@ function Add_liste_courses() {
   const [item, setItem] = useState("")
   const [number, setNumber] = useState(0)
   const [list, setList] = useState({})
+  const [load,setLoad] = useState(false);
 
-  const [showInfo, setShowInfo] = useState(false) 
+  const [username, setUsername] = useState("")
+  const [listName, setListName] = useState("")
+
+  const [hideInfo, setHideInfo] = useState(false) 
 
   useEffect(() => {
     // Get the list from local storage
     const listString = localStorage.getItem('list')
-    if (listString) {
+    if (listString && !load) {
       const list = JSON.parse(listString)
-      setList(list)
-      setShowInfo(true) 
+      setList(list)     
+      setLoad(true)
     }
-  }, [])
+    else
+    localStorage.setItem('list', JSON.stringify(list));
+
+  }, [list]);
 
   function handleAddItem() {
 
@@ -39,21 +46,26 @@ function Add_liste_courses() {
     function handleSubmit(event) {
     event.preventDefault();
     handleAddItem()
-    localStorage.setItem('list', JSON.stringify(list));
-    setShowInfo(true) 
   }
   async function handleSaveList(event) {
     event.preventDefault();
-   
-    try {
-      const response = await axios.post('http://localhost:3000/api/courses', {list,username:"hugo"});
-      console.log(response.data);
-    } catch (error) {
-      console.error(error);
+    if(hideInfo == false){
+      alert("Veuillez renseigner votre username")
     }
-    setList({})
-    alert("Liste sauvegardée")
-    console.log(list)
+    else {
+      try {
+        const response = await axios.post('http://localhost:3000/api/courses', {list,username: username,listName: listName});
+        console.log(response.data);
+      } catch (error) {
+        console.error(error);
+      }
+      setList({})
+      setListName("")
+      localStorage.removeItem('list')
+      alert("Liste sauvegardée")
+      console.log(list) 
+    }
+    
   }
     function handleRemove(event) {
     event.preventDefault();
@@ -65,7 +77,23 @@ function Add_liste_courses() {
   return (
     <div className={styles.container}>
       <Header />
-      <div>
+      <div className={styles.userInteraction}>
+      {!hideInfo && (
+           <div className={styles.handleUsername}>
+              <form className={styles.forms} onSubmit={(event) => {
+                  event.preventDefault();
+                  setHideInfo(true);
+                }}>
+                <label className={styles.label}>
+                  Quelle est votre Username ? 
+                  <input className={styles.input} type="text" value={username} onChange={event => setUsername(event.target.value)} />
+                </label>
+              </form> 
+           </div>
+        )}
+
+      <div className={styles.userInteraction}>
+        {hideInfo && <h1 className={styles.title}>Utilisateur actuel : "{username}"</h1>}
         <form className={styles.forms} onSubmit={handleSubmit}>
           <label className={styles.label}>
             Item :
@@ -79,29 +107,31 @@ function Add_liste_courses() {
           <button className={styles.submit} type="submit">Ajouter</button>
         </form>
 
-        {showInfo && (
-          <div className={styles.grid}>
-            {Object.entries(list).map(([key, value], index) => (
-                <div className={styles.item} key={index}>
-                  <p>{key} : {value}</p>
-                </div>
-              ))}
-
-          </div>
-        )}
-
-        <form onSubmit={handleSaveList}>
+        <form className={styles.validate} onSubmit={handleSaveList}>
+          <label className={styles.label}>
+            Nom de la liste de courses :
+            <input className={styles.input} type="text" value={listName} onChange={event => setListName(event.target.value)} />
+          </label>
           <button className={styles.submit} type="submit" >Valider la liste</button>
         </form>
+        
         <form onSubmit={handleRemove}>
           <button className={styles.submit} type="submit">Supprimer la liste</button>
         </form>
+        </div>
+        <div className={styles.image}></div>
       </div>
-  
-
-      <div className={styles.image}></div>
-
+      
+      <div className={styles.grid} style={{"--showInfo" : Object.entries(list).length > 0 ? "1px" : 0}}>
+        {Object.entries(list).map(([key, value], index) => (
+            <div className={styles.item} key={index}>
+              <p>{key} : {value}</p>
+            </div>
+          ))}
+      </div>    
+        
     </div>
+    
   )
 }
 
